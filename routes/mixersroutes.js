@@ -8,6 +8,7 @@ const {
   getmixers,
   //   getfanbyid,
   createmixer,
+  updatemixer,
   //   updatefan,
   //   deletefan,
 } = require("../controllers/mixercontroller");
@@ -16,7 +17,7 @@ const {
 router.get("/mixers", getmixers);
 // router.get("/fansbyid/:id", getfanbyid);
 router.post("/createmixer", createmixer);
-// router.put("/updatefan/:id", updatefan);
+router.put("/updatemixer/:id", updatemixer);
 // router.delete("/deletefan/:id", deletefan);
 
 module.exports = router;

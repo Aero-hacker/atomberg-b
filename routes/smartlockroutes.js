@@ -8,6 +8,7 @@ const {
   getsmartlocks,
   //   getfanbyid,
   createsmartlocks,
+  updatesmartlocks,
   //   updatefan,
   //   deletefan,
 } = require("../controllers/smartlockscontroller");
@@ -16,7 +17,7 @@ const {
 router.get("/smartlocks", getsmartlocks);
 // router.get("/fansbyid/:id", getfanbyid);
 router.post("/createsmartlocks", createsmartlocks);
-// router.put("/updatefan/:id", updatefan);
+router.put("/updatesmartlocks/:id", updatesmartlocks);
 // router.delete("/deletefan/:id", deletefan);
 
 module.exports = router;

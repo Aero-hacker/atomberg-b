@@ -49,7 +49,44 @@ const createsmartlocks = asynchandler(async (req, res) => {
   }
 });
 
+const updatesmartlocks = asynchandler(async (req, res) => {
+  // Find the smart lock by ObjectId
+  const smartlock = await smartlocks.findById(req.params.id);
+  if (!smartlock) {
+    return res.status(404).json({ message: "Smart Lock doesn't exist" });
+  }
+
+  // Define allowed fields for updates
+  const allowedUpdates = [
+    "title",
+    "colors",
+    "actualprice",
+    "currentprice",
+    "discount",
+    "images",
+  ];
+
+  // Filter the request body to include only allowed fields
+  const updates = {};
+  Object.keys(req.body).forEach((key) => {
+    if (allowedUpdates.includes(key)) {
+      updates[key] = req.body[key];
+    }
+  });
+
+  // Update the smart lock record
+  const updatedSmartLock = await smartlocks.findByIdAndUpdate(
+    req.params.id,
+    { $set: updates },
+    { new: true, runValidators: true } // Return the updated document and apply schema validations
+  );
+
+  // Respond with the updated smart lock
+  res.status(200).json(updatedSmartLock);
+});
+
 module.exports = {
   getsmartlocks,
   createsmartlocks,
+  updatesmartlocks,
 };

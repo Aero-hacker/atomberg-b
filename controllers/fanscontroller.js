@@ -57,35 +57,39 @@ const createfan = asynchandler(async (req, res) => {
 });
 
 const updatefan = asynchandler(async (req, res) => {
+  // Find the fan by ObjectId
   const fan = await fans.findById(req.params.id);
   if (!fan) {
-    return res.status(404).json({ message: "Post doesn't exist" });
+    return res.status(404).json({ message: "Fan doesn't exist" });
   }
 
-  if (fan.user_id?.toString() !== req.user.id) {
-    return res
-      .status(403)
-      .json({ message: "User doesn't have permission to update this post" });
-  }
-
+  // Define allowed fields for updates
   const allowedUpdates = [
     "title",
     "colors",
     "actualprice",
     "currentprice",
     "discount",
+    "images",
   ];
-  const updates = Object.keys(req.body).filter((key) =>
-    allowedUpdates.includes(key)
-  );
 
-  const updatedPost = await fans.findByIdAndUpdate(
+  // Filter the request body to include only allowed fields
+  const updates = {};
+  Object.keys(req.body).forEach((key) => {
+    if (allowedUpdates.includes(key)) {
+      updates[key] = req.body[key];
+    }
+  });
+
+  // Update the fan record
+  const updatedFan = await fans.findByIdAndUpdate(
     req.params.id,
     { $set: updates },
-    { new: true }
+    { new: true, runValidators: true } // Return the updated document and apply schema validations
   );
 
-  res.status(200).json(updatedPost);
+  // Respond with the updated fan
+  res.status(200).json(updatedFan);
 });
 
 const deletefan = asynchandler(async (req, res) => {

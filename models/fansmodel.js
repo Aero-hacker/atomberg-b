@@ -35,11 +35,12 @@ const fansschema = mongoose.Schema(
       max: [100, "Discount cannot be greater than 100"],
     },
     images: {
-      type: [String], // Array of strings for image URLs
-      required: [true, "At least one image is mandatory"],
+      type: Map,
+      of: String,
+      required: [true, "Images are mandatory"],
       validate: {
-        validator: (value) => value.length > 0,
-        message: "At least one image is required",
+        validator: (value) => value.size > 0,
+        message: "Images object must have at least one entry",
       },
     },
   },
