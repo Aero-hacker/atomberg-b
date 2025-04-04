@@ -15,9 +15,9 @@ const {
 
 // router.use(validatetoken);
 router.get("/smartlocks", getsmartlocks);
-router.get("/fansbyid/:id", getfanbyid);
+// router.get("/fansbyid/:id", getfanbyid);
 router.post("/createsmartlocks", createsmartlocks);
 router.put("/updatesmartlocks/:id", updatesmartlocks);
-router.delete("/deletefan/:id", deletefan);
+// router.delete("/deletefan/:id", deletefan);
 
 module.exports = router;
